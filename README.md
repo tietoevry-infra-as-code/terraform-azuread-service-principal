@@ -8,7 +8,7 @@ To create a service principal and assign roles to the resources, this module nee
 
 ```hcl
 module "service-principal" {
-  source = "github.com/tietoevry-infra-as-code/terraform-azuread-service-principal?ref=v1.0.0"
+  source  = "github.com/tietoevry-infra-as-code/terraform-azuread-service-principal?ref=v2.0.0"
 
   service_principal_name     = "simple-appaccess"
   password_rotation_in_years = 1
@@ -34,7 +34,7 @@ This module creates the service principal using a certificate. This can be enabl
 
 ```hcl
 module "service-principal" {
-  source = "github.com/tietoevry-infra-as-code/terraform-azuread-service-principal?ref=v1.0.0"
+  source  = "github.com/tietoevry-infra-as-code/terraform-azuread-service-principal?ref=v2.0.0"
 
   service_principal_name               = "simple-appaccess"
   enable_service_principal_certificate = true
@@ -51,6 +51,18 @@ module "service-principal" {
 }
 ```
 
+## Create X.509 Certificate with Asymmetric Keys
+
+To create a self signed SSL certificate, execute the following OpenSSL command, replacing the -days and -subj parameters with the appropriate values:
+
+```sh
+openssl req -x509 -days 3650 -newkey rsa:2048 -out cert.pem -nodes -subj '/CN=simple-appaccess'
+```
+
+This command will create two files: `cert.pem` and `privkey.pem`. The `cert.pem` file contains the X.509 certificate with public key. This certificate will be attached to the Active Directory Application. The `privkey.pem` file contains the RSA private key that will be used to authenticate with Azure Active Directory for the Service Principal.
+
+When self-signed certificates are not sufficient, sign your certificate using a Third-Party Certificate Authority such as Verisign, GeoTrust, or some other Internal Certificate Authority by generating a certificate signing request (CSR).
+
 ## Password rotation using `time_rotating`
 
 Manages a rotating time resource, which keeps a rotating UTC timestamp stored in the Terraform state and proposes resource recreation when the locally sourced current time is beyond the rotation time. This rotation only occurs when Terraform is executed, meaning there will be drift between the rotation timestamp and actual rotation.
@@ -63,8 +75,8 @@ You can set the scope at the level of the subscription, resource group, or resou
 
 ```hcl
 module "service-principal" {
-  source = "github.com/tietoevry-infra-as-code/terraform-azuread-service-principal?ref=v1.0.0"
-
+  source  = "github.com/tietoevry-infra-as-code/terraform-azuread-service-principal?ref=v2.0.0"
+  
   # .... omitted
 
   # Adding roles and scope to service principal
@@ -108,7 +120,7 @@ Name | Description | Type | Default
 
 ## Authors
 
-Module is maintained by [Kumaraswamy Vithanala](mailto:kumaraswamy.vithanala@tieto.com) with the help from other awesome contributors.
+Module is maintained by [Kumaraswamy Vithanala](mailto:kumarvna@gmail.com) with the help from other awesome contributors.
 
 ## Other resources
 
