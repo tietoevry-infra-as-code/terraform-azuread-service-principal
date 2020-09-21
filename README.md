@@ -8,7 +8,8 @@ To create a service principal and assign roles to the resources, this module nee
 
 ```hcl
 module "service-principal" {
-  source  = "github.com/tietoevry-infra-as-code/terraform-azuread-service-principal?ref=v2.0.0"
+  source  = "kumarvna/service-principal/azuread"
+  version = "2.0.0"
 
   service_principal_name     = "simple-appaccess"
   password_rotation_in_years = 1
@@ -34,7 +35,8 @@ This module creates the service principal using a certificate. This can be enabl
 
 ```hcl
 module "service-principal" {
-  source  = "github.com/tietoevry-infra-as-code/terraform-azuread-service-principal?ref=v2.0.0"
+  source  = "kumarvna/service-principal/azuread"
+  version = "2.0.0"
 
   service_principal_name               = "simple-appaccess"
   enable_service_principal_certificate = true
@@ -75,7 +77,8 @@ You can set the scope at the level of the subscription, resource group, or resou
 
 ```hcl
 module "service-principal" {
-  source  = "github.com/tietoevry-infra-as-code/terraform-azuread-service-principal?ref=v2.0.0"
+  source  = "kumarvna/service-principal/azuread"
+  version = "2.0.0"
   
   # .... omitted
 
@@ -136,7 +139,7 @@ Name | Description | Type | Default
 
 ## Authors
 
-Originally created by [Kumaraswamy Vithanala (Kumar)](mailto:kumaraswamy.vithanala@tieto.com)
+Originally created by [Kumaraswamy Vithanala](mailto:kumaraswamy.vithanala@tieto.com)
 
 ## Other resources
 
