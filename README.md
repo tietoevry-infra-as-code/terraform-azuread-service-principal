@@ -1,3 +1,5 @@
+> ## This repository is no longer maintained actively. Please visit https://github.com/kumarvna?tab=repositories for the latest updates.
+
 # Service Principal Terraform Module
 
 Terraform module to create a service principal and assign required built-in roles. The outputs from this module, like application_id and password, can be used as an input in other modules.
